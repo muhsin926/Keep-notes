@@ -1,5 +1,4 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { log } from "console";
 import { nanoid } from "nanoid";
 
 type Note = {
@@ -58,8 +57,10 @@ const noteSlice = createSlice({
     name: 'notes',
     initialState,
     reducers: {
+        setNotes: (state, action) => {
+            state.notes = [...action.payload]
+        },
         addNotes: (state, action: PayloadAction<Note>) => {
-            console.log(action)
             state.notes = [...state.notes, action.payload]
         },
         updateNote: (state, action) => {
@@ -73,5 +74,5 @@ const noteSlice = createSlice({
     }
 })
 
-export const { addNotes, updateNote, deleteNote } = noteSlice.actions;
+export const { setNotes, addNotes, updateNote, deleteNote } = noteSlice.actions;
 export default noteSlice.reducer
