@@ -1,31 +1,51 @@
-import React from 'react'
+import React, { MouseEvent, useState } from 'react'
+import { useAppDispatch, useAppSelector } from '../store/hooks'
+import { setEditNote, setIsVisible } from '../store/slices/editSlices'
 
-type ModalProps = {
-    note: {
-        id: string,
-        title: string,
-        content: string,
-        date: Date,
-    },
-    isVisible: boolean
-}
 
-const Modal = (props: ModalProps) => {
-    if(!props.isVisible) return null
+const Modal = () => {
+    const [title, setTitle] = useState('')
+    const [content, setContent] = useState('')
+    const [edit, setEdit] = useState(false)
+    const { editNote, isVisible } = useAppSelector((state) => state.editSlices)
+    const dispatch = useAppDispatch()
+
+    const handleClick = (e: MouseEvent<HTMLDivElement>) => {
+        const divElement = e.target as HTMLDivElement;
+        if (divElement.id === 'outerDiv') {
+            dispatch(setIsVisible(false))
+            dispatch(setEditNote({}))
+        }
+    }
+
+    const handleSubmit =() => {
+        if(!edit) {
+            setEdit(true)
+            return
+        }
+       const editedNote = {
+        id: editNote.id,
+        title: title,
+        content: content,
+        date: new Date()
+       }
+
+    }
+    if (!isVisible) return null
     return (
-        <div className='fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center'>
+        <div className='fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center' id='outerDiv' onClick={(e) => handleClick(e)}>
             <div className=' w-96 border-zinc-300 bg-white border-[1px] rounded-xl p-5 flex flex-col gap-4'>
-                <input className="focus:outline-none" type="text" value={props.note.title} placeholder="Title" />
+                <input className="focus:outline-none" type="text" value={title} placeholder="Title" onChange={(e) => setTitle(e.target.value)} />
                 <textarea
                     className="focus:outline-none"
                     rows={3}
                     cols={10}
                     placeholder='Content...'
-                    value={props.note.content}
-                // onChange={(e) => setContent(e.target.value)}
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
                 />
                 <div className="flex justify-end">
-                    <button className="bg-gray-200 py-1 px-3 rounded">Update</button>
+                    <button onClick={() => handleSubmit()} className="bg-gray-200 py-1 px-3 rounded">{edit? 'Save' : 'Edit'}</button>
                 </div>
             </div>
         </div>

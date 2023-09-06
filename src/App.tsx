@@ -3,32 +3,15 @@ import Header from "./components/Header";
 import NotesList from "./components/NotesList";
 import { nanoid } from "nanoid";
 import Modal from "./components/Modal";
+import { useDispatch, useSelector } from "react-redux";
+import { addNotes } from './store/slices/notesSlices'
+import { useAppDispatch, useAppSelector } from "./store/hooks";
 
 function App() {
-  const [notes, setNotes] = useState([
-    {
-      id: nanoid(),
-      title: "learn fullstack development",
-      content: "lorem lipsm adfad  kjadf adsf asdfoaadf adfa ads afdf  df",
-      date: new Date()
-    },
-    {
-      id: nanoid(),
-      title: "learn fullstack development",
-      content: "lorem lipsm adfad  kjadf adsf asdfoaadf adfa ads afdf  df",
-      date: new Date()
-    },
-    {
-      id: nanoid(),
-      title: "learn fullstack development",
-      content: "lorem lipsm adfad  kjadf adsf asdfoaadf adfa ads afdf  df",
-      date: new Date()
-
-    },
-  ]);
+  const notes = useAppSelector((state) =>  state.notes)
   const [content, setContent] = useState('')
   const [title, setTitle] = useState('')
-  const [isVisible, setIsVisble] = useState(false)
+  const dispatch = useAppDispatch()
 
   const addNote = () => {
     if (!title || !content) return
@@ -38,14 +21,9 @@ function App() {
       content: content,
       date: new Date()
     }
-    setNotes([...notes, newNote])
+    dispatch(addNotes(newNote))
     setTitle('')
     setContent('')
-  }
-
-  const deleteNote = (id:string) => {
-      const updateNotes = notes.filter((note) => note.id != id)
-      setNotes(updateNotes)
   }
 
   return (
@@ -67,8 +45,8 @@ function App() {
           </div>
         </div>
       </div>
-      <NotesList notes={notes} handleDeleteNote={deleteNote} />
-      <Modal note={notes[0]} isVisible={isVisible}/>
+      <NotesList notes={notes} />
+      <Modal/>
     </>
   );
 }
