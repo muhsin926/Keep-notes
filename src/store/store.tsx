@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import notesSlices from "./slices/notesSlices";
-import editReducer from './slices/editSlices'
+import notesReducer from "./slices/notesSlices";
+import editReducer from './slices/editSlices';
+import searchReducer from './slices/searchSlice'
 
 const store = configureStore({
     reducer: {
-        notes: notesSlices,
+        notes: notesReducer,
         editSlices: editReducer,
+        searchSlice: searchReducer,
     }
 })
 export default store
