@@ -18,7 +18,7 @@ const Modal = (props: ModalProps) => {
     useEffect(() => {
         setTitle(editNote?.title)
         setContent(editNote?.content)
-    }, [isVisible])
+    }, [])
 
 
     const handleClick = (e: MouseEvent<HTMLDivElement>) => {
