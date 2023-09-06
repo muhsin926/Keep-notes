@@ -33,4 +33,4 @@ To run this application locally, follow these steps:
 
 ## Deployment
 
-This application is deployed to Netlify and can be accessed react-notes-app.netlify.app.
+This application is deployed to Netlify and can be accessed https://keep-notes-blush.vercel.app/.
