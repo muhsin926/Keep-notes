@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { log } from "console";
 import { nanoid } from "nanoid";
 
 type Note = {
@@ -16,23 +17,40 @@ const initialState: Notes = {
     notes: [
         {
             id: nanoid(),
-            title: "learn fullstack development",
-            content: "lorem lipsm adfad  kjadf adsf asdfoaadf adfa ads afdf  df",
-            date: new Date()
-        },
-        {
+            title: 'Meeting Notes',
+            content: 'Discuss project progress with the team.',
+            date: new Date(),
+          },
+          {
             id: nanoid(),
-            title: "learn fullstack development",
-            content: "lorem lipsm adfad  kjadf adsf asdfoaadf adfa ads afdf  df",
-            date: new Date()
-        },
-        {
+            title: 'Grocery List',
+            content: 'Buy milk, eggs, bread, and vegetables.',
+            date: new Date(),
+          },
+          {
             id: nanoid(),
-            title: "learn fullstack development",
-            content: "lorem lipsm adfad  kjadf adsf asdfoaadf adfa ads afdf  df",
-            date: new Date()
-
-        },
+            title: 'Book Recommendations',
+            content: 'Check out "The Great Gatsby" and "To Kill a Mockingbird."',
+            date: new Date(),
+          },
+          {
+            id: nanoid(),
+            title: 'Workout Plan',
+            content: '30 minutes of cardio, followed by strength training.',
+            date: new Date(),
+          },
+          {
+            id: nanoid(),
+            title: 'Recipe Ideas',
+            content: 'Try a new pasta recipe with garlic and olive oil.',
+            date: new Date(),
+          },
+          {
+            id: nanoid(),
+            title: 'Travel Plans',
+            content: 'Book flights to Paris for next summer vacation.',
+            date: new Date(),
+          },
     ]
 }
 
@@ -41,6 +59,7 @@ const noteSlice = createSlice({
     initialState,
     reducers: {
         addNotes: (state, action: PayloadAction<Note>) => {
+            console.log(action)
             state.notes = [...state.notes, action.payload]
         },
         updateNote: (state, action) => {

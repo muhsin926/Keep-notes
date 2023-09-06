@@ -1,10 +1,14 @@
 import React, { MouseEvent, useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 import { setEditNote, setIsVisible } from '../store/slices/editSlices'
-import { updateNote } from '../store/slices/notesSlices'
+import { addNotes, updateNote } from '../store/slices/notesSlices'
+import { nanoid } from 'nanoid'
 
+type ModalProps = {
+    addNew: boolean
+}
 
-const Modal = () => {
+const Modal = (props: ModalProps) => {
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
     const [edit, setEdit] = useState(false)
@@ -26,8 +30,22 @@ const Modal = () => {
     }
 
     const handleSubmit = () => {
-        if (!edit) {
+        if (!title || !content) return
+        if (!edit && !props.addNew) {
             setEdit(true)
+            return
+        }
+        if (props.addNew) {
+            const newNote = {
+                id: nanoid(),
+                title: title,
+                content: content,
+                date: new Date()
+            }
+            dispatch(addNotes(newNote))
+            setTitle('')
+            setContent('')
+            dispatch(setIsVisible(false))
             return
         }
         const editedNote = {
@@ -39,12 +57,13 @@ const Modal = () => {
         dispatch(updateNote(editedNote))
         dispatch(setIsVisible(false))
         setEdit(false)
+
     }
     if (!isVisible) return null
     return (
         <div className='fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center' id='outerDiv' onClick={(e) => handleClick(e)}>
             <div className=' w-96 border-zinc-300 bg-white border-[1px] rounded-xl p-5 flex flex-col gap-4'>
-                <input className="focus:outline-none" type="text" readOnly={edit ? false : true} value={title} placeholder="Title" onChange={(e) => setTitle(e.target.value)} />
+                <input className="focus:outline-none" type="text" readOnly={edit ? false : props.addNew ? false : true} value={title} placeholder="Title" onChange={(e) => setTitle(e.target.value)} />
                 <textarea
                     className="focus:outline-none"
                     rows={3}
@@ -52,10 +71,10 @@ const Modal = () => {
                     placeholder='Content...'
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
-                    readOnly={edit ? false : true}
+                    readOnly={edit ? false: props.addNew ? false : true}
                 />
                 <div className="flex justify-end">
-                    <button onClick={() => handleSubmit()} className="bg-gray-200 py-1 px-3 rounded">{edit ? 'Save' : 'Edit'}</button>
+                    <button onClick={() => handleSubmit()} className="bg-gray-200 py-1 px-3 rounded">{edit || props.addNew ? 'Save' : 'Edit'}</button>
                 </div>
             </div>
         </div>

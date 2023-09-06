@@ -3,14 +3,16 @@ import Header from "./components/Header";
 import NotesList from "./components/NotesList";
 import { nanoid } from "nanoid";
 import Modal from "./components/Modal";
-import { useDispatch, useSelector } from "react-redux";
 import { addNotes } from './store/slices/notesSlices'
 import { useAppDispatch, useAppSelector } from "./store/hooks";
+import {FiEdit} from 'react-icons/fi'
+import { setIsVisible } from "./store/slices/editSlices";
 
 function App() {
   const notes = useAppSelector((state) =>  state.notes)
   const [content, setContent] = useState('')
   const [title, setTitle] = useState('')
+  const [addNew, setAddNew] = useState(false)
   const dispatch = useAppDispatch()
 
   const addNote = () => {
@@ -26,27 +28,22 @@ function App() {
     setContent('')
   }
 
+  const handleClick = () => {
+    dispatch(setIsVisible(true))
+    setAddNew(true)
+  }
+
   return (
     <>
       <Header />
       <div className="p-5 flex justify-center">
-        <div className='xs:col-span-12 md:col-span-6 lg:col-span-4 w-96 border-zinc-300 border-[1px] rounded-xl p-5 flex flex-col gap-4'>
-          <input className="focus:outline-none" type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title" />
-          <textarea
-            className="focus:outline-none"
-            rows={3}
-            cols={10}
-            placeholder='Content...'
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
-          <div className="flex justify-end">
-            <button onClick={addNote} className="bg-gray-200 py-1 px-3 rounded">Save</button>
-          </div>
+        <div onClick={() => handleClick()} className='cursor-pointer justify-between items-center w-96 border-zinc-300 border-[1px] rounded  p-3 flex gap-4'>
+          <p>Take a note...</p>
+          <FiEdit/>
         </div>
       </div>
       <NotesList notes={notes} />
-      <Modal/>
+      <Modal addNew={addNew}/>
     </>
   );
 }
