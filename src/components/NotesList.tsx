@@ -19,7 +19,6 @@ type NotesListProps = {
 }
 
 const NotesList = (props: NotesListProps) => {
-    const { editNote } = useAppSelector((state) => state.editSlices)
     const { searchText } = useAppSelector((state) => state.searchSlice)
     const [pageNumber, setPageNumber] = useState(0)
     const dispatch = useAppDispatch();

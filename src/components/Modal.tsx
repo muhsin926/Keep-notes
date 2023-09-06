@@ -16,8 +16,8 @@ const Modal = (props: ModalProps) => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        setTitle(editNote.title)
-        setContent(editNote.content)
+        setTitle(editNote?.title)
+        setContent(editNote?.content)
     }, [isVisible])
 
 
