@@ -12,12 +12,14 @@ const Modal = (props: ModalProps) => {
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
     const [edit, setEdit] = useState(false)
+    const [select, setSelect] = useState('')
     const { editNote, isVisible } = useAppSelector((state) => state.editSlices)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
         setTitle(editNote?.title)
         setContent(editNote?.content)
+        setSelect(editNote?.category)
     }, [isVisible])
 
 
@@ -40,6 +42,7 @@ const Modal = (props: ModalProps) => {
                 id: nanoid(),
                 title: title,
                 content: content,
+                category: select,
                 date: new Date()
             }
             dispatch(addNotes(newNote))
@@ -52,6 +55,7 @@ const Modal = (props: ModalProps) => {
             id: editNote.id,
             title: title,
             content: content,
+            category: select,
             date: new Date()
         }
         dispatch(updateNote(editedNote))
@@ -64,6 +68,12 @@ const Modal = (props: ModalProps) => {
         <div className='fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center' id='outerDiv' onClick={(e) => handleClick(e)}>
             <div className=' w-96 border-zinc-300 bg-white border-[1px] rounded-xl p-5 flex flex-col gap-4'>
                 <input className="focus:outline-none" type="text" readOnly={edit ? false : props.addNew ? false : true} value={title} placeholder="Title" onChange={(e) => setTitle(e.target.value)} />
+                <select className='w-24  border-[1px] border-gray-300 rounded' name='category' value={select} onChange={(e) => setSelect(e.target.value)}>
+                    <option value="food">Food</option>
+                    <option value="job">Job</option>
+                    <option value="family">Family</option>
+                    <option value="personal">Personal</option>
+                </select>
                 <textarea
                     className="focus:outline-none"
                     rows={3}
@@ -71,7 +81,7 @@ const Modal = (props: ModalProps) => {
                     placeholder='Content...'
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
-                    readOnly={edit ? false: props.addNew ? false : true}
+                    readOnly={edit ? false : props.addNew ? false : true}
                 />
                 <div className="flex justify-end">
                     <button onClick={() => handleSubmit()} className="bg-gray-200 py-1 px-3 rounded">{edit || props.addNew ? 'Save' : 'Edit'}</button>

@@ -4,6 +4,7 @@ type Note = {
     id: string,
     title: string,
     content: string,
+    category: string,
     date: Date,
 }
 interface InitialState {
@@ -16,6 +17,7 @@ const initialState: InitialState = {
         id: '',
         title: '',
         content: '',
+        category: '',
         date: new Date(),
     },
     isVisible: false,

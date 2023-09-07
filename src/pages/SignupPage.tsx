@@ -10,7 +10,7 @@ const SignupPage = () => {
     const navigate = useNavigate()
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if(password.length < 6) {
+        if (password.length < 6) {
             toast.error('password should be at least 6 characters')
             return
         }

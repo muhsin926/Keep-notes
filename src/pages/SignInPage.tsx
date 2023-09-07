@@ -12,16 +12,16 @@ const SignInPage = () => {
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        try{
+        try {
             await signInWithEmailAndPassword(auth, email, password)
             navigate('/')
-        }catch(err) {
+        } catch (err) {
             toast.error('error')
             console.error(err)
         }
     }
-  return (
-    <div className="flex justify-center">
+    return (
+        <div className="flex justify-center">
             <div className="my-[3rem] mx-4 py-[3rem] bg-white rounded-lg w-[440px] shadow-lg">
                 <h2 className=" text-center text-3xl font-bold">
                     Sign in
@@ -66,7 +66,7 @@ const SignInPage = () => {
                 </div>
             </div>
         </div>
-  )
+    )
 }
 
 export default SignInPage

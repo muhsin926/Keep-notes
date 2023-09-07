@@ -8,7 +8,7 @@ import { Toaster } from 'react-hot-toast';
 const App = () => {
   return (
     <>
-    <Toaster/>
+      <Toaster />
       <Router>
         <Routes>
           <Route path='/' element={<HomePage />} />
