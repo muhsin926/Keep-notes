@@ -1,18 +1,19 @@
 import React, { FormEvent, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../config/firbase'
+import { auth } from '../config/firebase'
 
 const SignupPage = () => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
+    const navigate = useNavigate()
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        try{
+        try {
             await createUserWithEmailAndPassword(auth, email, password)
-        }catch(err) {
+            navigate('/signin')
+        } catch (err) {
             console.error(err)
         }
     }
@@ -67,9 +68,8 @@ const SignupPage = () => {
                 </form>
                 <div className="ml-[3rem]">
                     <p className="text-xs mt-4 mb-1 text-lightBlue">
-                        Already have an account? <Link to={"/signin"}>Sign in.</Link>
+                        Already have an account? <Link className='text-blue-400' to={"/signin"}>Sign in.</Link>
                     </p>
-                    <p className="text-xs text-lightBlue">Terms and conditions.</p>
                 </div>
             </div>
         </div>

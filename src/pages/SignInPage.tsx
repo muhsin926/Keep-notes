@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from 'react'
-import { auth } from '../config/firbase'
+import { auth } from '../config/firebase'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -59,7 +59,7 @@ const SignInPage = () => {
                 </form>
                 <div className="ml-[3rem]">
                     <p className="text-xs mt-4 mb-1 text-lightBlue">
-                        Don't have an account? <Link to={"/signup"}>Sign up.</Link>
+                        Don't have an account? <Link className='text-blue-400' to={"/signup"}>Sign up.</Link>
                     </p>
                 </div>
             </div>
