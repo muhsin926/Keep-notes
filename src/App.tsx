@@ -3,10 +3,12 @@ import HomePage from './pages/HomePage';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import SignupPage from './pages/SignupPage';
 import SignInPage from './pages/SignInPage';
+import { Toaster } from 'react-hot-toast';
 
 const App = () => {
   return (
     <>
+    <Toaster/>
       <Router>
         <Routes>
           <Route path='/' element={<HomePage />} />

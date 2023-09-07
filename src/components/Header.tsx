@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {CiSearch} from 'react-icons/ci'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 import { setSearchText } from '../store/slices/searchSlice'
 import { signOut } from 'firebase/auth'
 import { auth } from '../config/firebase'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-hot-toast'
 
 const Header = () => {
-    const {searchText} = useAppSelector((state) => state.searchSlice)
+    const {searchText } = useAppSelector((state) => state.searchSlice)
+    const [temp, setTemp] = useState(false)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
@@ -20,6 +22,8 @@ const Header = () => {
         }
         try{
             await signOut(auth);
+            toast.success('Logout successful')
+            setTemp(!temp)
         }catch(err) {
             console.error(err)
         }

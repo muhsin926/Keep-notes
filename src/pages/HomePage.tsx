@@ -6,13 +6,21 @@ import Modal from "../components/Modal";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import {FiEdit} from 'react-icons/fi'
 import { setIsVisible } from "../store/slices/editSlices";
+import { auth } from '../config/firebase';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
     const notes = useAppSelector((state) =>  state.notes)
   const [addNew, setAddNew] = useState(false)
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
+  const user = auth.currentUser?.getIdToken;
   const handleClick = () => {
+    if(!user){
+        navigate('/signin')
+        return
+    }
     dispatch(setIsVisible(true))
     setAddNew(true)
   }

@@ -2,6 +2,7 @@ import React, { FormEvent, useState } from 'react'
 import { auth } from '../config/firebase'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-hot-toast'
 
 const SignInPage = () => {
     const [name, setName] = useState('')
@@ -15,6 +16,7 @@ const SignInPage = () => {
             await signInWithEmailAndPassword(auth, email, password)
             navigate('/')
         }catch(err) {
+            toast.error('error')
             console.error(err)
         }
     }
